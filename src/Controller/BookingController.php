@@ -20,12 +20,10 @@ class BookingController extends AbstractController
     public function index(BookingRepository $bookingRepository): Response
     {
         // Récupère toutes les réservations depuis la base de données
-        $bookings = $bookingRepository->findAll();
 
         // Passez les réservations au template index.html.twig
         return $this->render('index.html.twig', [
-            'bookings' => $bookings,
-        ]);
+         ]);
     }
 
 
@@ -92,7 +90,7 @@ class BookingController extends AbstractController
         $bookings = $bookingRepository->findAll();
 
         // Passez la variable 'bookings' à votre template
-        return $this->render('booking_list.html.twig', [
+        return $this->render('booking/list.html.twig', [
             'bookings' => $bookings,
         ]);
     }
@@ -119,7 +117,7 @@ class BookingController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToRoute('ma_page'); // Retourner à la page principale
+            return $this->redirectToRoute('booking_list');
         }
 
         // Afficher le formulaire avec les valeurs de l'entité existante
@@ -137,7 +135,7 @@ class BookingController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('ma_page');
+        return $this->redirectToRoute('booking_list');
     }
 
 }
