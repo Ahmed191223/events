@@ -97,5 +97,47 @@ class BookingController extends AbstractController
         ]);
     }
 
+    #[Route('booking/edit-booking/{id}', name: 'edit_booking')]
+    public function editBooking($id, BookingRepository $bookingRepository, Request $request, EntityManagerInterface $em): Response
+    {
+        // Récupérer la réservation
+        $booking = $bookingRepository->find($id);
+
+        if (!$booking) {
+            throw $this->createNotFoundException('Booking not found.');
+        }
+
+        // Pré-remplir le formulaire avec les données existantes
+        if ($request->isMethod('POST')) {
+            $booking->setName($request->request->get('name'));
+            $booking->setEmail($request->request->get('email'));
+            $booking->setPhone($request->request->get('phone'));
+            $booking->setDate(new \DateTime($request->request->get('date')));
+            $booking->setTime(new \DateTime($request->request->get('time')));
+            $booking->setPeople((int)$request->request->get('people'));
+            $booking->setMessage($request->request->get('message', null));
+
+            $em->flush();
+
+            return $this->redirectToRoute('ma_page'); // Retourner à la page principale
+        }
+
+        // Afficher le formulaire avec les valeurs de l'entité existante
+        return $this->render('booking/edit_booking.html.twig', [
+            'booking' => $booking,
+        ]);
+    }
+    #[Route('/{id}', name: 'delete_booking', methods: ['POST', 'DELETE'])]
+    public function deleteBooking($id, BookingRepository $bookingRepository, EntityManagerInterface $em): Response
+    {
+        $booking = $bookingRepository->find($id);
+
+        if ($booking) {
+            $em->remove($booking);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('ma_page');
+    }
 
 }

@@ -589,43 +589,69 @@
         </div>
 
     </section><!-- /Book A Table Section -->
-    <section id="booking-list" class="section">
-        <div class="container mt-5" data-aos="fade-up">
-            <h2>List of Reservations</h2>
+    <section id="booking-list" class="section py-5">
+        <div class="container" data-aos="fade-up">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>List of Reservations</h2>
+                <p>Reservations</p>
+
+            </div>
+
             {% if bookings is not empty %}
-                <table class="table table-striped table-bordered mt-4">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>People</th>
-                        <th>Message</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for booking in bookings %}
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover table-bordered text-center align-middle">
+                        <thead class="table-light text-dark">
                         <tr>
-                            <td>{{ loop.index }}</td>
-                            <td>{{ booking.name }}</td>
-                            <td>{{ booking.email }}</td>
-                            <td>{{ booking.phone }}</td>
-                            <td>{{ booking.date|date('Y-m-d') }}</td>
-                            <td>{{ booking.time|date('H:i') }}</td>
-                            <td>{{ booking.people }}</td>
-                            <td>{{ booking.message|default('N/A') }}</td>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">People</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Actions</th>
+
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for booking in bookings %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ booking.name }}</td>
+                                <td>{{ booking.email }}</td>
+                                <td>{{ booking.phone }}</td>
+                                <td>{{ booking.date|date('Y-m-d') }}</td>
+                                <td>{{ booking.time|date('H:i') }}</td>
+                                <td>{{ booking.people }}</td>
+                                <td>{{ booking.message|default('N/A') }}</td>
+                                <td>
+                                    <!-- Modifier Button -->
+                                    <a href="{{ path('edit_booking', {'id': booking.id}) }}" class="btn btn-warning btn-sm">
+                                        Edit
+                                    </a>
+                                    <!-- Supprimer Button -->
+                                    <form action="{{ path('delete_booking', {'id': booking.id}) }}" method="post" style="display:inline;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this reservation?');">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+
+                    </table>
+                </div>
             {% else %}
-                <p>No bookings found.</p>
+                <div class="text-center">
+                    <p class="fs-5">No reservations found.</p>
+                </div>
             {% endif %}
         </div>
-    </section>    <!-- Testimonials Section -->
+    </section>  <!-- Testimonials Section -->
+
     <section id="testimonials" class="testimonials section">
 
         <!-- Section Title -->
