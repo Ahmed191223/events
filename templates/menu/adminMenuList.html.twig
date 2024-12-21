@@ -9,6 +9,12 @@
             <p>Menu list</p>
         </div>
 
+        <!-- Add Menu Button -->
+        <div class="branding d-flex align-items-cente">
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+            <a href="{{ path('menu_add') }}" class="btn btn-warning">Ajouter un Menu</a>
+        </div>
+        </div>
         <div class="mt-5">
 
             <table class="table table-dark table-hover table-bordered text-center align-middle">
@@ -20,6 +26,7 @@
                     <th>Prix</th>
                     <th>Catégorie</th>
                     <th>Disponible</th>
+                    <th>Image</th> <!-- Nouvelle colonne pour l'image -->
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -32,19 +39,28 @@
                         <td>{{ menu.price }}</td>
                         <td>{{ menu.category }}</td>
                         <td>
-                                <span class="badge {{ menu.available ? 'bg-success' : 'bg-danger' }}">
-                                    {{ menu.available ? 'Disponible' : 'Indisponible' }}
-                                </span>
+                            <span class="badge {{ menu.available ? 'bg-success' : 'bg-danger' }}">
+                                {{ menu.available ? 'Disponible' : 'Indisponible' }}
+                            </span>
+                        </td>
+                        <td>
+                            <!-- Afficher l'image en cercle avec taille réduite -->
+                            {% if menu.image %}
+                                <img src="{{ asset('uploads/menu_images/' ~ menu.image) }}" alt="{{ menu.name }}" width="60" height="60" class="rounded-circle">
+                            {% else %}
+                                <span>Pas d'image</span>
+                            {% endif %}
                         </td>
                         <td>
                             <form action="{{ path('menu_delete', {'id': menu.id}) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce menu ?');">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                            </form>                        </td>
+                            </form>
+                        </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="7" class="text-center">Aucun menu trouvé.</td>
+                        <td colspan="8" class="text-center">Aucun menu trouvé.</td>
                     </tr>
                 {% endfor %}
                 </tbody>

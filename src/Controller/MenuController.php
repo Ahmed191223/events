@@ -64,7 +64,7 @@ class MenuController extends AbstractController
         $menus = $menuRepository->findAll();
 
         // Passez la variable 'bookings' à votre template
-        return $this->render('menu/AdminListMenu.html.twig', [
+        return $this->render('menu/adminMenuList.html.twig', [
             'menus' => $menus,
         ]);
     }
@@ -80,6 +80,38 @@ class MenuController extends AbstractController
 
         return $this->redirectToRoute('menu_list');
     }
+    #[Route('/menu/update/{id}', name: 'update_menu')]
+    public function updateMenu($id, MenuRepository $menuRepository, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Récupérer le menu à partir de l'ID
+        $menu = $menuRepository->find($id);
 
+        // Vérifier si le menu existe
+        if (!$menu) {
+            throw $this->createNotFoundException('Menu not found');
+        }
+
+        // Créer un formulaire pour ce menu
+        $form = $this->createForm(MenuType::class, $menu);
+
+        // Gérer la soumission du formulaire
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Sauvegarder les changements dans la base de données
+            $entityManager->flush();
+
+            // Message flash de succès
+            $this->addFlash('success', 'Menu updated successfully.');
+
+            // Rediriger vers la liste des menus
+            return $this->redirectToRoute('menu_list');
+        }
+
+        // Rendu de la vue
+        return $this->render('menu/updateMenu.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
 }
