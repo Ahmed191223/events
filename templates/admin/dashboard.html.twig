@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord Admin{% endblock %}
+
+{% block body %}
+    <h1>Tableau de bord de l'administration</h1>
+
+    <h2>Nombre de réservations par email :</h2>
+
+    <ul>
+        {% for item in bookingsByEmail %}
+            <li>Email : {{ item.email }}, Nombre de réservations : {{ item.bookingCount }}</li>
+        {% else %}
+            <li>Aucune réservation trouvée.</li>
+        {% endfor %}
+    </ul>
+
+    {# ... le reste du contenu du tableau de bord ... #}
+{% endblock %}
