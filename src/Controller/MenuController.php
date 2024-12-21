@@ -64,7 +64,7 @@ class MenuController extends AbstractController
         $menus = $menuRepository->findAll();
 
         // Passez la variable 'bookings' à votre template
-        return $this->render('menu/AdminListMenu.html.twig', [
+        return $this->render('menu/adminMenuList.html.twig', [
             'menus' => $menus,
         ]);
     }
