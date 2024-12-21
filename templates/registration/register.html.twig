@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Register</h1>
+
+    {{ form_start(registrationForm) }}
+    {{ form_widget(registrationForm) }}
+    <button type="submit" class="btn btn-primary">Register</button>
+    {{ form_end(registrationForm) }}
+
+    {% for error in form.errors %}
+        <div class="alert alert-danger">{{ error.message }}</div>
+    {% endfor %}
+
+    {% for child in form.children %}
+        {% for error in child.errors %}
+            <div class="alert alert-danger">{{ error.message }}</div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
