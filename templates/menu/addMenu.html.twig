@@ -4,11 +4,16 @@
 
 {% block body %}
     <div class="container" data-aos-delay="100" style="margin-top: 150px; margin-bottom: 50px;">
+
         <div class="section-title ">
             <h2>Menu</h2>
             <p>Add new menu</p>
         </div>
-
+        <div class="branding d-flex align-items-cente" style="margin-bottom: 20px">
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a href="{{ path('menu_list') }}" class="btn btn-warning">Check List</a>
+            </div>
+        </div>
         {{ form_start(form, {'attr': {'class': 'php-email-form'}}) }}
 
         <div class="row gy-4">

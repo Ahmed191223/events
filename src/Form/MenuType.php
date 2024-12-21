@@ -32,9 +32,9 @@ class MenuType extends AbstractType
             ->add('category', ChoiceType::class, [
                 'label' => 'Catégorie',
                 'choices' => [
-                    'Entrée' => 'entrée',
-                    'Plat principal' => 'plat',
-                    'Dessert' => 'dessert',
+                    'Starters' => 'starters',
+                    'Salads' => 'salads',
+                    'Specialty' => 'specialty',
                 ],
             ])
             ->add('available', CheckboxType::class, [

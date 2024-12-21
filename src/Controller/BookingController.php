@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Booking;
 use App\Form\BookingType;
 use App\Repository\BookingRepository;
+use App\Repository\MenuRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,13 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
 class BookingController extends AbstractController
 {
     #[Route('/', name: 'ma_page')]
-    public function index(BookingRepository $bookingRepository): Response
+    public function index(MenuRepository $menuRepository): Response
     {
         // Récupère toutes les réservations depuis la base de données
+        $menus = $menuRepository->findAll();
 
-        // Passez les réservations au template index.html.twig
+        // Passez la variable 'menus' à votre template
         return $this->render('index.html.twig', [
-         ]);
+            'menus' => $menus,
+        ]);
     }
 
 
