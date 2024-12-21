@@ -45,4 +45,13 @@ class BookingRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function countByEmail(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b.email, COUNT(b.id) as bookingCount') // Sélectionne l'email et compte les ID
+            ->groupBy('b.email') // Grouper par email
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

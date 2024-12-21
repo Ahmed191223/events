@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\BookingRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +19,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'app_admin_dashboard')]
-    public function index(): Response
+    public function index(BookingRepository $bookingRepository): Response
     {
-        return $this->render('admin/dashboard.html.twig');
+        $bookingsByEmail = $bookingRepository->countByEmail(); // Utilise la méthode countByUserEmail()
+
+        return $this->render('admin/dashboard.html.twig', [
+            'bookingsByEmail' => $bookingsByEmail, // Passe les données au template
+        ]);
     }
 
     #[Route('/users', name: 'app_user_index', methods: ['GET'])]
