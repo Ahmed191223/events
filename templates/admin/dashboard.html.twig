@@ -1,19 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tableau de bord Admin{% endblock %}
+{% block title %}DashBoard{% endblock %}
 
 {% block body %}
-    <h1>Tableau de bord de l'administration</h1>
+    <div class="container" style="margin-top: 150px; margin-bottom: 50px;">
+        <h1>Tableau de bord de l'administration</h1>
 
-    <h2>Nombre de réservations par email :</h2>
+        <h2>Nombre de réservations par email :</h2>
 
-    <ul>
-        {% for item in bookingsByEmail %}
-            <li>Email : {{ item.email }}, Nombre de réservations : {{ item.bookingCount }}</li>
-        {% else %}
-            <li>Aucune réservation trouvée.</li>
-        {% endfor %}
-    </ul>
 
-    {# ... le reste du contenu du tableau de bord ... #}
+        <ul>
+            {% for item in bookingsByEmail %}
+                <li>Email : {{ item.email }}, Nombre de réservations : {{ item.bookingCount }}</li>
+            {% else %}
+                <li>Aucune réservation trouvée.</li> {# Gérer le cas où il n'y a pas de données #}
+            {% endfor %}
+        </ul>
+
+        <canvas id="myChart"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const bookingsData = {{ bookingsByEmail|json_encode()|raw }}; // Important pour encoder correctement le JSON
+
+            const labels = bookingsData.map(item => item.email);
+            const data = bookingsData.map(item => item.bookingCount);
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar', // Type d'histogramme
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Nombre de réservations',
+                        data: data,
+                        backgroundColor: [ // Couleurs des barres (vous pouvez personnaliser)
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            // ... d'autres couleurs si nécessaire
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            // ...
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true // Commence l'axe Y à zéro
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
 {% endblock %}

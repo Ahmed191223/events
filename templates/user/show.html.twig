@@ -1,13 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails de l'utilisateur{% endblock %}
+{% block title %}User Details{% endblock %}
 
 {% block body %}
-    <h1>Détails de l'utilisateur</h1>
+    <div class="container mt-5 mb-5">
+        <div class="section-title text-center mb-4">
+            <h2>User Details</h2>
+        </div>
 
-    <p><strong>ID :</strong> {{ user.id }}</p>
-    <p><strong>Email :</strong> {{ user.email }}</p>
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="m-0">User Information</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>ID :</strong> {{ user.id }}</p>
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <p><strong>Roles :</strong>
+                    {% for role in user.roles %}
+                        <span class="badge bg-secondary">{{ role }}</span>
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="card-footer text-end">
+                <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{{ path('app_user_index') }}" class="btn btn-secondary btn-sm">Back to List</a>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning">Modifier</a>
-    <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    <style>
+        .card {
+            border-radius: 8px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .card-header {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .card-body {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .card-footer {
+            background-color: #f8f9fa;
+        }
+
+        .btn {
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .badge {
+            font-size: 0.9rem;
+        }
+    </style>
 {% endblock %}

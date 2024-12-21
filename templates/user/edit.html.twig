@@ -1,14 +1,106 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier l'utilisateur{% endblock %}
+{% block title %}Edit user information{% endblock %}
 
 {% block body %}
-    <h1>Modifier l'utilisateur</h1>
+    <div class="container" data-aos-delay="100" style="margin-top: 150px; margin-bottom: 50px;">
+        <div class="section-title text-center">
+            <h2>Edit User Information</h2>
+        </div>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit" class="btn btn-primary">Modifier</button>
-    {{ form_end(form) }}
+        <div class="form-wrapper">
+            <h3 class="form-title">Update Your Details</h3>
 
-    <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            {{ form_start(form, {'attr': {'class': 'user-edit-form'}}) }}
+
+            <div class="form-group">
+                {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.roles, 'Roles', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.roles, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+
+            {{ form_end(form) }}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Modify</button>
+            </div>
+
+            <div class="form-group">
+                <a href="{{ path('app_user_index') }}" class="btn btn-secondary btn-block">Back to the list</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .form-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-block {
+            margin-top: 15px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+    </style>
 {% endblock %}
